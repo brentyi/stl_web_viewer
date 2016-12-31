@@ -1,0 +1,23 @@
+{
+  "name": "stl_web_viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/brentyi/stl_web_viewer.git"
+  },
+  "author": "brent",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brentyi/stl_web_viewer/issues"
+  },
+  "homepage": "https://github.com/brentyi/stl_web_viewer#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "multer": "^1.2.1"
+  }
+}
