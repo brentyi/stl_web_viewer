@@ -1,4 +1,92 @@
-<form enctype="multipart/form-data" action="/upload" method="post">
-    <input type="file" name="model" />
-    <input type="submit" value="Upload Image" name="submit" />
+<style>
+html, body {
+    background-color: #eee;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+h1 {
+    display: block;
+    padding: 1em;
+    margin: 0;
+}
+form {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+label {
+    background-color: #fff;
+    display: inline-block;
+    border: 1px solid #666;
+    color: #666;
+    padding: 1em 2em;
+    cursor: pointer;
+}
+.uploading label {
+    display: none;
+}
+input[type="file"] {
+    display: none;
+}
+#progress {
+    display: none;
+}
+.uploading #progress {
+    display: block;
+}
+#percent {
+    font-size: 5em;
+    color: #aaa;
+}
+</style>
+
+<script>
+
+function fileSelected() {
+    var fd = new FormData();
+    fd.append("model", $('input[type="file"]').get(0).files[0]);
+
+    $('#upload').addClass('uploading');
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        xhr: function() {
+            var xhr = $.ajaxSettings.xhr();
+            if (xhr.upload) {
+                xhr.upload.addEventListener('progress', function(evt) {
+                    var percent = Math.floor((evt.loaded / evt.total) * 100);
+                    $('#percent').text(percent + '%');
+                    console.log(evt.loaded + "/" + evt.total);
+                }, false);
+            }
+            return xhr;
+        },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(evt) {
+            alert('Upload error!');
+            $('#upload').removeClass('uploading');
+            console.log(evt);
+        },
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false
+    }, 'json');
+}
+
+</script>
+
+<form id="upload" enctype="multipart/form-data" action="/upload" method="post">
+    <label>
+        <input type="file" id="model" name="model" onchange="fileSelected();" />
+        Select STL
+    </label>
+    <div id="progress">
+        <span id="percent">0%</span>
+    </div>
 </form>
