@@ -1,9 +1,13 @@
 const express = require('express');
+const handlebars  = require('express-handlebars');
 const multer = require('multer');
 
 var app = express();
 app.set('port', process.env.port || 5001);
 app.use(express.static('public'));
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 /* Disk Storage engine of multer gives you full control on storing files to disk. The options are destination (for determining which folder the file should be saved) and filename (name of the file inside the folder) */
 
@@ -19,8 +23,8 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage: storage}).single('model');
 
-app.get('/', function(resuest, response) {
-    response.sendFile('index.html');
+app.get('/', function(request, response) {
+    response.render("home");
 });
 
 //Posting the file upload
