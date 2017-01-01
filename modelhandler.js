@@ -69,7 +69,7 @@ module.exports.getModel = (name, cb) => {
             return;
         }
 
-        db_models.update({_id: item._id}, {$set: {last_viewed: new Date()}});
+        db_models.update({_id: item._id}, {$set: {last_viewed: new Date(), views: ++item.views}});
 
         console.log(err);
         console.log(item);
