@@ -18,17 +18,19 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 15000);
     camera.position.set(50, 50, 50);
-    cameraTarget = new THREE.Vector3(0, 0, 0);
+    cameraTarget = new THREE.Vector3();
     controls = new THREE.OrbitControls(camera, document);
+    controls.target = cameraTarget;
     controls.addEventListener('change', render);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.25;
+    controls.dampingFactor = 0.125;
     controls.enableZoom = true;
     scene = new THREE.Scene();
 
     var loader = new THREE.STLLoader();
 
     point_light = new THREE.PointLight( 0xffffff, 0.5, 0 );
+    point_light.position.set(0, 10, 0);
 
     onProgress = (event) => {
         console.log(event.loaded + "/" + event.total);
@@ -50,37 +52,26 @@ function init() {
             opacity: 0.9
         });
         var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(0, 0, 0);
         //mesh.rotation.set( 0, - Math.PI / 2, 0 );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         scene.add(mesh);
         console.log("a");
-        var edges = new THREE.EdgesGeometry(geometry, 19);
+        var edges = new THREE.EdgesGeometry(geometry, 29);
         var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
             color: 0x111111
         }));
         scene.add(line);
 
-        geometry.computeBoundingBox();
+        geometry.computeBoundingSphere();
+        cameraTarget.copy(geometry.boundingSphere.center);
 
-        var x = geometry.boundingBox.max.x * 1.75;
-        var y = geometry.boundingBox.max.y * 1.75;
-        var z = geometry.boundingBox.max.z * 1.75;
-
-        x = Math.max(x, y, z);
-        y = x;
-        z = x;
-
-        camera.position.set(x, y, z);
-        point_light.position.set(0, 20, 0);
-
-        var c = geometry.boundingBox.min.clone();
-        c.add(geometry.boundingBox.max);
-        c.divideScalar(2);
-        cameraTarget = c;
+        var r = geometry.boundingSphere.radius / 0.625;
+        controls.maxDistance = geometry.boundingSphere.radius * 10;
+        camera.position.set(r + cameraTarget.x, r + cameraTarget.y, r + cameraTarget.z);
 
     }, onProgress);
-
 
     // Lights
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x555555));
