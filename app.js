@@ -10,6 +10,7 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.use('/', require('./routes/uploader'));
+app.use('/viewer', require('./routes/viewer'));
 
 app.get('/error', (request, response) => {
     response.render("error");
