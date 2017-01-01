@@ -1,5 +1,6 @@
 const multer = require('multer');
 const mongodb = require('mongodb');
+const config = require('config');
 
 var storage = multer.diskStorage({
     destination: (request, file, callback) => {
@@ -10,7 +11,10 @@ var storage = multer.diskStorage({
         callback(null, name)
     }
 });
-var upload = multer({storage: storage}).single('model');
+var upload = multer({
+    storage: storage,
+    limits: {fileSize: config.get('filesize_max_mb') * 1024 * 1024}
+}).single('model');
 
 var db;
 var db_models;
@@ -43,13 +47,12 @@ module.exports.uploadModel = (request, response) => {
         var host = (request.headers['x-forwarded-host'] || request.header.host);
         var url = 'http://' + host + '/uploads/' + request.file.filename;
 
-        var date = new Date();
-        var expiration = new Date(date.setTime( date.getTime() + 1/*days*/ * 86400000 ));
         db_models.insert({
             name: model_name,
             url: url,
             path: request.file.path,
-            expiration: expiration
+            views: 0,
+            last_viewed: new Date()
         });
 
         response.json({
@@ -61,6 +64,13 @@ module.exports.uploadModel = (request, response) => {
 
 module.exports.getModel = (name, cb) => {
     var model = db_models.findOne({name: name}, (err, item) => {
+        if(!item) {
+            console.log("nonexistent model!");
+            return;
+        }
+
+        db_models.update({_id: item._id}, {$set: {last_viewed: new Date()}});
+
         console.log(err);
         console.log(item);
 

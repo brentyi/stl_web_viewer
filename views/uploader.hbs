@@ -27,7 +27,8 @@ function upload(file) {
             $('#upload').addClass('upload_done');
             $embed = $('#response iframe');
             $embed.attr('src', data.embed);
-            $('#markup').text($embed.get(0).outerHTML);
+            $('#embed_url').attr('href', data.embed);
+            $('#embed_url').text(data.embed);
         },
         error: (evt) => {
             alert('Upload error!');
@@ -72,6 +73,8 @@ $('body').on('drop', (e) => {
     </div>
     <div id="response">
         <iframe src=""></iframe>
-        <div id="markup"></div>
+        <div id="markup">
+            &lt;iframe src="<a id="embed_url" target="_blank" href=""></a>"&gt;&lt;/iframe&gt;
+        </div>
     </div>
 </form>
