@@ -23,7 +23,7 @@ function init() {
     controls.addEventListener('change', render);
     controls.enableDamping = true;
     controls.dampingFactor = 0.25;
-    controls.enableZoom = false;
+    controls.enableZoom = true;
     scene = new THREE.Scene();
 
     var loader = new THREE.STLLoader();
