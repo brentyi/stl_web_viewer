@@ -35,9 +35,16 @@ input[type="file"] {
 .upload_started:not(.upload_done) #progress {
     display: block;
 }
+@keyframes pulse {
+    0%   {opacity: 1;}
+    50%  {opacity: 0.5;}
+}
 #percent {
     font-size: 5em;
     color: #aaa;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 #response {
     display: none;

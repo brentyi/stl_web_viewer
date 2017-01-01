@@ -19,6 +19,11 @@ html, body, #container {
     opacity: 1;
 }
 
+@keyframes pulse {
+    0%   {opacity: 1;}
+    50%  {opacity: 0.5;}
+}
+
 #percent {
     position: absolute;
     top: 50%;
@@ -27,8 +32,7 @@ html, body, #container {
     text-align: center;
     width: 100%;
     color: #aaa;
-}
-
-.loaded #percent {
-    display: none;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }

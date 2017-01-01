@@ -38,8 +38,6 @@ function init() {
     };
 
     loader.load('{{model_url}}', (geometry) => {
-        $('body').addClass('loaded');
-
         var material = new THREE.MeshPhongMaterial({
             color: 0xffffff,
             specular: 0x111111,
@@ -70,6 +68,8 @@ function init() {
         var r = geometry.boundingSphere.radius / 0.625;
         controls.maxDistance = geometry.boundingSphere.radius * 10;
         camera.position.set(r + cameraTarget.x, r + cameraTarget.y, r + cameraTarget.z);
+
+        $('body').addClass('loaded');
 
     }, onProgress);
 
