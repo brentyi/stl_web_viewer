@@ -1,57 +1,4 @@
-<style>
-html, body {
-    background-color: #eee;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-}
-h1 {
-    display: block;
-    padding: 1em;
-    margin: 0;
-}
-form {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-}
-label {
-    display: inline-block;
-    border: 1px solid #777;
-    color: #555;
-    padding: 1em 2em;
-    cursor: pointer;
-}
-.uploading label {
-    display: none;
-}
-input[type="file"] {
-    display: none;
-}
-#progress {
-    display: none;
-}
-.uploading #progress {
-    display: block;
-}
-#percent {
-    font-size: 5em;
-    color: #aaa;
-}
-.dragover {
-    opacity: 0.5;
-}
-</style>
-
 <script>
-
-function fileSelected() {
-    var file = $('input[type="file"]').get(0).files[0];
-    upload(file);
-}
-
 function upload(file) {
     if (!file || file.name.split(".").pop() != "stl") {
         alert("Invalid file!");
@@ -67,11 +14,11 @@ function upload(file) {
         xhr: () => {
             var xhr = $.ajaxSettings.xhr();
             if (xhr.upload) {
-                xhr.upload.addEventListener('progress', (evt) => {
+                xhr.upload.onprogress = (evt) => {
                     var percent = Math.round((evt.loaded / evt.total) * 100);
                     $('#percent').text(percent + '%');
                     console.log(evt.loaded + "/" + evt.total);
-                }, false);
+                };
             }
             return xhr;
         },
@@ -81,7 +28,7 @@ function upload(file) {
         error: (evt) => {
             alert('Upload error!');
             $('#upload').removeClass('uploading');
-            console.log(evt);
+            console.error(evt);
         },
         data: fd,
         cache: false,
@@ -105,12 +52,11 @@ $('body').on('drop', (e) => {
     console.log(file);
     upload(file);
 });
-
 </script>
 
 <form id="upload" enctype="multipart/form-data" action="/upload" method="post">
     <label>
-        <input type="file" id="model" name="model" onchange="fileSelected();" />
+        <input type="file" id="model" name="model" onchange="upload(this.files[0]);" />
         Upload STL
     </label>
     <div id="progress">
