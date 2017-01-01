@@ -53,7 +53,8 @@ module.exports.uploadModel = (request, response) => {
         });
 
         response.json({
-            url: url
+            url: url,
+            embed: 'http://' + host + '/viewer/' + model_name
         });
     })
 }
