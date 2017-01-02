@@ -23,6 +23,7 @@ function init() {
     controls.target = cameraTarget;
     controls.addEventListener('change', render);
     controls.enableDamping = true;
+    controls.rotateSpeed = 0.15;
     controls.dampingFactor = 0.125;
     controls.enableZoom = true;
     controls.autoRotate = true;
