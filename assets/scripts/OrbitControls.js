@@ -4,8 +4,12 @@
  * @author alteredq / http://alteredqualia.com/
  * @author WestLangley / http://github.com/WestLangley
  * @author erich666 / http://erichaines.com
+ * @author brent / https://github.com/brentyi
  */
 
+// This is a modified version of the three.js OrbitControls example, with some enhancements
+// for auto-rotation.
+//
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
 //
@@ -65,6 +69,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// If auto-rotate is enabled, you must call controls.update() in your animation loop
 	this.autoRotate = false;
 	this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
+	this.autoRotateDelay = 0.0; // how long after an action do we start rotating again?
+	this.autoRotateTimeout;
 
 	// Set to false to disable use of the keys
 	this.enableKeys = true;
@@ -139,6 +145,18 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 				rotateLeft( getAutoRotationAngle() );
 
+			} else if( scope.autoRotate && scope.autoRotateDelay > 0 ) {
+
+				if ( scope.autoRotateSpeed > 0.0 ) {
+					scope.autoRotateSpeedActual = scope.autoRotateSpeed;
+					scope.autoRotateSpeed = 0.0;
+				}
+
+				clearTimeout(scope.autoRotateTimeout);
+				scope.autoRotateTimeout = setTimeout(function() {
+					scope.autoRotateSpeed = scope.autoRotateSpeedActual;
+				}, scope.autoRotateDelay);
+
 			}
 
 			spherical.theta += sphericalDelta.theta;
@@ -189,8 +207,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 			// using small-angle approximation cos(x/2) = 1 - x^2 / 8
 
 			if ( zoomChanged ||
-				lastPosition.distanceToSquared( scope.object.position ) > EPS ||
-				8 * ( 1 - lastQuaternion.dot( scope.object.quaternion ) ) > EPS ) {
+					lastPosition.distanceToSquared( scope.object.position ) > EPS ||
+					8 * ( 1 - lastQuaternion.dot( scope.object.quaternion ) ) > EPS ) {
 
 				scope.dispatchEvent( changeEvent );
 

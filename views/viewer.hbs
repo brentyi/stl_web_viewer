@@ -25,6 +25,9 @@ function init() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.125;
     controls.enableZoom = true;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.25;
+    controls.autoRotateDelay = 5000;
     scene = new THREE.Scene();
 
     var loader = new THREE.STLLoader();
