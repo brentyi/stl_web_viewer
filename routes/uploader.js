@@ -4,7 +4,10 @@ const router = express.Router();
 
 /* Homepage */
 router.get('/', (req, res, next) => {
-    res.render('uploader', {styles: ['uploader']});
+    res.render('uploader', {
+        styles: ['uploader'],
+        size_limit: handler.size_limit
+    });
 });
 
 //Posting the file upload

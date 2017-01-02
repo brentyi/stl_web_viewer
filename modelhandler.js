@@ -2,6 +2,9 @@ const multer = require('multer');
 const mongodb = require('mongodb');
 const config = require('config');
 
+var size_limit = config.get('filesize_max_mb');
+module.exports.size_limit = size_limit;
+
 var storage = multer.diskStorage({
     destination: (request, file, callback) => {
         callback(null, 'assets/uploads');
@@ -13,7 +16,7 @@ var storage = multer.diskStorage({
 });
 var upload = multer({
     storage: storage,
-    limits: {fileSize: config.get('filesize_max_mb') * 1024 * 1024}
+    limits: {fileSize: size_limit * 1024 * 1024}
 }).single('model');
 
 var db;
