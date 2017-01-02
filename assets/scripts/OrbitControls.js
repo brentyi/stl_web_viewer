@@ -141,7 +141,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 			// angle from z-axis around y-axis
 			spherical.setFromVector3( offset );
 
-			if ( scope.autoRotate && state === STATE.NONE ) {
+			if ( scope.autoRotate && state === STATE.NONE && !wheelZoomed ) {
 
 				rotateLeft( getAutoRotationAngle() );
 
@@ -156,6 +156,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 				scope.autoRotateTimeout = setTimeout(function() {
 					scope.autoRotateSpeed = scope.autoRotateSpeedActual;
 				}, scope.autoRotateDelay);
+
+				wheelZoomed = false;
 
 			}
 
@@ -268,6 +270,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 	var scale = 1;
 	var panOffset = new THREE.Vector3();
 	var zoomChanged = false;
+
+	var wheelZoomed = false; // for auto-rotate
 
 	var rotateStart = new THREE.Vector2();
 	var rotateEnd = new THREE.Vector2();
@@ -763,6 +767,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		scope.dispatchEvent( startEvent ); // not sure why these are here...
 		scope.dispatchEvent( endEvent );
+
+		wheelZoomed = true;
 
 	}
 
