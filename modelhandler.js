@@ -4,6 +4,8 @@ const config = require('config');
 
 var size_limit = config.get('filesize_max_mb');
 module.exports.size_limit = size_limit;
+var site_root = config.get('site_root');
+module.exports.site_root = site_root;
 
 var storage = multer.diskStorage({
     destination: (request, file, callback) => {
@@ -47,8 +49,7 @@ module.exports.uploadModel = (request, response) => {
 
         console.log('Uploaded model to ' + request.file.path);
 
-        var host = (request.headers['x-forwarded-host'] || request.header.host);
-        var url = 'http://' + host + '/uploads/' + request.file.filename;
+        var url = site_root + '/uploads/' + request.file.filename;
 
         db_models.insert({
             name: model_name,
@@ -60,7 +61,7 @@ module.exports.uploadModel = (request, response) => {
 
         response.json({
             url: url,
-            embed: 'http://' + host + '/viewer/' + model_name
+            embed: site_root + '/viewer/' + model_name
         });
     })
 }
@@ -69,6 +70,10 @@ module.exports.getModel = (name, cb) => {
     var model = db_models.findOne({name: name}, (err, item) => {
         if(!item) {
             console.log("nonexistent model!");
+            return;
+        }
+        if (err) {
+            console.log("get model error! ", err);
             return;
         }
 
@@ -81,3 +86,12 @@ module.exports.getModel = (name, cb) => {
     });
 }
 
+module.exports.getModels = (cb) => {
+    db_models.find().toArray((err, results) => {
+        if (err) {
+            console.log("get models error! ", err);
+            return;
+        }
+        cb(results);
+    });
+}
