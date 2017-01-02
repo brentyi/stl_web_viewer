@@ -37,11 +37,11 @@ input[type="file"] {
 }
 @keyframes pulse {
     0%   {opacity: 1;}
-    50%  {opacity: 0.5;}
+    50%  {opacity: 0.625;}
 }
 #percent {
     font-size: 5em;
-    color: #aaa;
+    color: #ccc;
     animation-name: pulse;
     animation-duration: 2s;
     animation-iteration-count: infinite;

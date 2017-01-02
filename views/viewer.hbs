@@ -33,7 +33,7 @@ function init() {
 
     var loader = new THREE.STLLoader();
 
-    point_light = new THREE.PointLight( 0xffffff, 0.5, 0 );
+    point_light = new THREE.PointLight( 0xdddddd, 0.75, 0 );
     point_light.position.set(0, 10, 0);
 
     onProgress = (event) => {
@@ -62,7 +62,7 @@ function init() {
         console.log("a");
         var edges = new THREE.EdgesGeometry(geometry, 29);
         var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
-            color: 0x111111
+            color: 0x888888
         }));
         scene.add(line);
 
@@ -78,7 +78,7 @@ function init() {
     }, onProgress);
 
     // Lights
-    scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x555555));
+    scene.add(new THREE.HemisphereLight(0x999999, 0x555555));
     camera.add( point_light );
     scene.add(camera);
 

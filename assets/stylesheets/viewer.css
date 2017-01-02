@@ -21,7 +21,7 @@ html, body, #container {
 
 @keyframes pulse {
     0%   {opacity: 1;}
-    50%  {opacity: 0.5;}
+    50%  {opacity: 0.625;}
 }
 
 #percent {
@@ -31,7 +31,7 @@ html, body, #container {
     font-size: 5em;
     text-align: center;
     width: 100%;
-    color: #aaa;
+    color: #ccc;
     animation-name: pulse;
     animation-duration: 2s;
     animation-iteration-count: infinite;
