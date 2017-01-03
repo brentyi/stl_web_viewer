@@ -23,6 +23,7 @@ function init() {
     controls.target = cameraTarget;
     controls.addEventListener('change', render);
     controls.enableDamping = true;
+    controls.enableKeys = false;
     controls.rotateSpeed = 0.15;
     controls.dampingFactor = 0.125;
     controls.enableZoom = true;
@@ -34,7 +35,7 @@ function init() {
     var loader = new THREE.STLLoader();
 
     point_light = new THREE.PointLight( 0xdddddd, 0.75, 0 );
-    point_light.position.set(0, 10, 0);
+    point_light.position.set(0, 20, 0);
 
     onProgress = (event) => {
         console.log(event.loaded + "/" + event.total);
@@ -51,7 +52,7 @@ function init() {
             polygonOffsetFactor: 1,
             polygonOffsetUnits: 1,
             transparent: true,
-            opacity: 0.9
+            opacity: 0.8
         });
         var mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(0, 0, 0);
@@ -67,11 +68,17 @@ function init() {
         scene.add(line);
 
         geometry.computeBoundingSphere();
+        geometry.computeBoundingBox();
         cameraTarget.copy(geometry.boundingSphere.center);
 
-        var r = geometry.boundingSphere.radius / 0.625;
-        controls.maxDistance = geometry.boundingSphere.radius * 10;
-        camera.position.set(r + cameraTarget.x, r + cameraTarget.y, r + cameraTarget.z);
+        var r = geometry.boundingSphere.radius;
+        controls.maxDistance = r * 10;
+
+        camera.position.set(
+            r * 1.5 + cameraTarget.x,
+            r * 1.5 + cameraTarget.y,
+            r * 1.5 + cameraTarget.z
+        );
 
         $('body').addClass('loaded');
 

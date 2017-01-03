@@ -8,7 +8,7 @@
  */
 
 // This is a modified version of the three.js OrbitControls example, with some enhancements
-// for auto-rotation.
+// for auto-rotation & embedding.
 //
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
@@ -240,6 +240,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		document.removeEventListener( 'mousemove', onMouseMove, false );
 		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener( 'mouseleave', onMouseUp, false );
 
 		window.removeEventListener( 'keydown', onKeyDown, false );
 
@@ -706,6 +707,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 			document.addEventListener( 'mousemove', onMouseMove, false );
 			document.addEventListener( 'mouseup', onMouseUp, false );
+			document.addEventListener( 'mouseleave', onMouseUp, false );
 
 			scope.dispatchEvent( startEvent );
 
@@ -749,6 +751,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 		document.removeEventListener( 'mousemove', onMouseMove, false );
 		document.removeEventListener( 'mouseup', onMouseUp, false );
+		document.removeEventListener( 'mouseleave', onMouseUp, false );
 
 		scope.dispatchEvent( endEvent );
 
