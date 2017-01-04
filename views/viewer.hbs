@@ -63,7 +63,7 @@ function init() {
         console.log("a");
         var edges = new THREE.EdgesGeometry(geometry, 29);
         var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
-            color: 0x888888,
+            color: 0x888888
         }));
         scene.add(line);
 
@@ -107,7 +107,7 @@ function init() {
     //stats = new Stats();
     //stats.domElement.style.position = 'absolute';
     //stats.domElement.style.top = '0px';
-    container.appendChild(stats.domElement);
+    //container.appendChild(stats.domElement);
 }
 
 function onWindowResize() {
