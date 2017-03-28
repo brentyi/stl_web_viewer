@@ -1,4 +1,4 @@
-function STLViewer(modelURL, loadedCallback) {
+function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
     if (!Detector.webgl) Detector.addGetWebGLMessage();
     var $container;
     var camera, controls, cameraTarget, scene, renderer, pointLight;
@@ -71,9 +71,19 @@ function STLViewer(modelURL, loadedCallback) {
             r * 1.5 + cameraTarget.z
         );
 
+        if (showBoundingBox) {
+            var box = new THREE.BoundingBoxHelper(mesh, 0xff7777);
+            scene.add(box);
+        }
+
         $container.addClass('loaded');
 
-        loadedCallback && loadedCallback({volume: calculateVolume(mesh)});
+        loadedCallback && loadedCallback({
+            volume: calculateVolume(mesh),
+            bound_x: Math.abs(mesh.boundingBox.max.x - mesh.boundingBox.min.x),
+            bound_y: Math.abs(mesh.boundingBox.max.y - mesh.boundingBox.min.y),
+            bound_z: Math.abs(mesh.boundingBox.max.z - mesh.boundingBox.min.z)
+        });
     }, onProgress);
 
     // Lights
