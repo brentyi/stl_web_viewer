@@ -11,6 +11,7 @@ app.set('view engine', 'hbs');
 
 app.use('/', require('./routes/uploader'));
 app.use('/viewer', require('./routes/viewer'));
+app.use('/info', require('./routes/info'));
 app.use('/list', require('./routes/list'));
 
 app.get('/error', (request, response) => {

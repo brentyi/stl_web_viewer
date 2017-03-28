@@ -1,0 +1,18 @@
+<script src="/scripts/three.min.js"></script>
+<script src="/scripts/STLLoader.js"></script>
+<script src="/scripts/Detector.js"></script>
+<script src="/scripts/OrbitControls.js"></script>
+<!-- <script src="/scripts/stats.min.js"></script> -->
+
+<script src="/scripts/STLViewer.js"></script>
+<script>
+$(function() {
+    STLViewer('{{model_url}}', $('#container'), false, function(data) {
+        console.log(data);
+    });
+});
+</script>
+
+<div id="container" style="width: 30em; height: 30em; position: relative; border: 1px solid red;">
+    <div id="percent"></div>
+</div>

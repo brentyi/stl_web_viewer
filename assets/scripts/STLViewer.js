@@ -1,12 +1,9 @@
-function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
+function STLViewer(modelURL, $container=$('body'), showBoundingBox=false, loadedCallback) {
     if (!Detector.webgl) Detector.addGetWebGLMessage();
     var $container;
     var camera, controls, cameraTarget, scene, renderer, pointLight;
 
-
-    $container = $('body');
-
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 15000);
+    camera = new THREE.PerspectiveCamera(40, $container.width() / $container.height(), 1, 15000);
     camera.position.set(50, 50, 50);
     cameraTarget = new THREE.Vector3();
     controls = new THREE.OrbitControls(camera, document);
@@ -29,7 +26,7 @@ function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
 
     onProgress = function(event) {
         console.log(event.loaded + "/" + event.total);
-        $('#percent').text(Math.floor(event.loaded / event.total * 100.0) + "%");
+        $container.children('#percent').text(Math.floor(event.loaded / event.total * 100.0) + "%");
     };
 
     loader.load(modelURL, function(geometry) {
@@ -95,26 +92,23 @@ function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
     });
     renderer.setClearColor(0xffffff);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize($container.width(), $container.height());
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.renderReverseSided = false;
     $container.append(renderer.domElement);
 
-    $(window).resize(function() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
     animate();
 
     function animate() {
+        camera.aspect = $container.width() / $container.height();
+        camera.updateProjectionMatrix();
+        renderer.setSize($container.width(), $container.height());
+
         requestAnimationFrame(animate);
         controls.update();
         render();
-        //stats.update();
     }
 
     function render() {
