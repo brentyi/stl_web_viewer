@@ -1,7 +1,7 @@
-function STLViewer(model_url) {
+function STLViewer(modelURL, loadedCallback) {
     if (!Detector.webgl) Detector.addGetWebGLMessage();
     var $container;
-    var camera, controls, cameraTarget, scene, renderer, point_light;
+    var camera, controls, cameraTarget, scene, renderer, pointLight;
 
 
     $container = $('body');
@@ -24,15 +24,15 @@ function STLViewer(model_url) {
 
     var loader = new THREE.STLLoader();
 
-    point_light = new THREE.PointLight( 0xdddddd, 0.75, 0 );
-    point_light.position.set(0, 20, 0);
+    pointLight = new THREE.PointLight( 0xdddddd, 0.75, 0);
+    pointLight.position.set(0, 20, 0);
 
     onProgress = function(event) {
         console.log(event.loaded + "/" + event.total);
         $('#percent').text(Math.floor(event.loaded / event.total * 100.0) + "%");
     };
 
-    loader.load(model_url, function(geometry) {
+    loader.load(modelURL, function(geometry) {
         var material = new THREE.MeshPhongMaterial({
             color: 0xffffff,
             specular: 0x111111,
@@ -44,12 +44,14 @@ function STLViewer(model_url) {
             transparent: true,
             opacity: 0.8
         });
+
         var mesh = new THREE.Mesh(geometry, material);
+
         mesh.position.set(0, 0, 0);
         mesh.castShadow = false;
         mesh.receiveShadow = false;
         scene.add(mesh);
-        console.log("a");
+
         var edges = new THREE.EdgesGeometry(geometry, 29);
         var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
             color: 0x888888
@@ -71,11 +73,12 @@ function STLViewer(model_url) {
 
         $container.addClass('loaded');
 
+        loadedCallback && loadedCallback({volume: calculateVolume(mesh)});
     }, onProgress);
 
     // Lights
     scene.add(new THREE.HemisphereLight(0x999999, 0x555555));
-    camera.add( point_light );
+    camera.add(pointLight);
     scene.add(camera);
 
     renderer = new THREE.WebGLRenderer({
@@ -96,11 +99,6 @@ function STLViewer(model_url) {
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    //stats = new Stats();
-    //stats.domElement.style.position = 'absolute';
-    //stats.domElement.style.top = '0px';
-    //$container.append(stats.domElement);
-
     animate();
 
     function animate() {
@@ -113,5 +111,34 @@ function STLViewer(model_url) {
     function render() {
         camera.lookAt(cameraTarget);
         renderer.render(scene, camera);
+    }
+
+    function calculateVolume(object){
+        var total = 0;
+
+        geometry = new THREE.Geometry().fromBufferGeometry(object.geometry);
+        faces = geometry.faces;
+        vertices = geometry.vertices;
+        for(var i = 0; i < faces.length; i++){
+            var Pi = faces[i].a;
+            var Qi = faces[i].b;
+            var Ri = faces[i].c;
+
+            var P = new THREE.Vector3(vertices[Pi].x, vertices[Pi].y, vertices[Pi].z);
+            var Q = new THREE.Vector3(vertices[Qi].x, vertices[Qi].y, vertices[Qi].z);
+            var R = new THREE.Vector3(vertices[Ri].x, vertices[Ri].y, vertices[Ri].z);
+            total += signedVolumeOfTriangle(P, Q, R);
+        }
+        return Math.abs(total);
+    }
+
+    function signedVolumeOfTriangle(p1, p2, p3) {
+        var v321 = p3.x*p2.y*p1.z;
+        var v231 = p2.x*p3.y*p1.z;
+        var v312 = p3.x*p1.y*p2.z;
+        var v132 = p1.x*p3.y*p2.z;
+        var v213 = p2.x*p1.y*p3.z;
+        var v123 = p1.x*p2.y*p3.z;
+        return (-v321 + v231 + v312 - v132 - v213 + v123) / 6.0;
     }
 }
