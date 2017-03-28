@@ -77,12 +77,11 @@ function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
         }
 
         $container.addClass('loaded');
-
         loadedCallback && loadedCallback({
             volume: calculateVolume(mesh),
-            bound_x: Math.abs(mesh.boundingBox.max.x - mesh.boundingBox.min.x),
-            bound_y: Math.abs(mesh.boundingBox.max.y - mesh.boundingBox.min.y),
-            bound_z: Math.abs(mesh.boundingBox.max.z - mesh.boundingBox.min.z)
+            width: Math.abs(mesh.geometry.boundingBox.max.x - mesh.geometry.boundingBox.min.x),
+            height: Math.abs(mesh.geometry.boundingBox.max.y - mesh.geometry.boundingBox.min.y),
+            length: Math.abs(mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z)
         });
     }, onProgress);
 
@@ -100,7 +99,7 @@ function STLViewer(modelURL, showBoundingBox=false, loadedCallback) {
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.cullFace = THREE.CullFaceBack;
+    renderer.shadowMap.renderReverseSided = false;
     $container.append(renderer.domElement);
 
     $(window).resize(function() {
