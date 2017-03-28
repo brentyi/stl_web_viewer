@@ -6,7 +6,7 @@ function STLViewer(modelURL, $container=$('body'), showBoundingBox=false, loaded
     camera = new THREE.PerspectiveCamera(40, $container.width() / $container.height(), 1, 15000);
     camera.position.set(50, 50, 50);
     cameraTarget = new THREE.Vector3();
-    controls = new THREE.OrbitControls(camera, document);
+    controls = new THREE.OrbitControls(camera, $container.get(0));
     controls.target = cameraTarget;
     controls.addEventListener('change', render);
     controls.enableDamping = true;
