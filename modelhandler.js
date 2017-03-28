@@ -60,8 +60,7 @@ module.exports.uploadModel = (request, response) => {
         });
 
         response.json({
-            url: url,
-            embed: site_root + '/viewer/' + model_name
+            info_url: site_root + '/info/' + model_name
         });
     })
 }

@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     handler.getModels((data) => {
         data.forEach((obj, index, arr) => {
-            obj.viewer_url = handler.site_root + '/viewer/' + obj.name;
+            obj.info_url = handler.site_root + '/info/' + obj.name;
         });
 
         var param = {

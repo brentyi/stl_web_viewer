@@ -23,12 +23,7 @@ function upload(file) {
             return xhr;
         },
         success: (data) => {
-            console.log(data);
-            $('#upload').addClass('upload_done');
-            $embed = $('#response iframe');
-            $embed.attr('src', data.embed);
-            $('#embed_url').attr('href', data.embed);
-            $('#embed_url').text(data.embed);
+            window.location = data.info_url;
         },
         error: (evt) => {
             alert('Upload error!');
@@ -66,7 +61,7 @@ $('body').on('drop', (e) => {
 <form id="upload" enctype="multipart/form-data" action="/upload" method="post">
     <label>
         <input type="file" id="model" name="model" onchange="upload(this.files[0]);" />
-        Upload (&lt; {{size_limit}}MB)
+        Upload STL (&lt; {{size_limit}}MB)
     </label>
     <div id="progress">
         <span id="percent">0%</span>
