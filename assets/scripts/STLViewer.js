@@ -24,8 +24,11 @@ function STLViewer(modelURL, $container=$('body'), showBoundingBox=false, loaded
     pointLight = new THREE.PointLight( 0xdddddd, 0.75, 0);
     pointLight.position.set(0, 20, 0);
 
+    fileSize = 0;
+
     onProgress = function(event) {
         console.log(event.loaded + "/" + event.total);
+        fileSize = event.total;
         $container.children('#percent').text(Math.floor(event.loaded / event.total * 100.0) + "%");
     };
 
@@ -78,7 +81,8 @@ function STLViewer(modelURL, $container=$('body'), showBoundingBox=false, loaded
             volume: calculateVolume(mesh),
             width: Math.abs(mesh.geometry.boundingBox.max.x - mesh.geometry.boundingBox.min.x),
             height: Math.abs(mesh.geometry.boundingBox.max.y - mesh.geometry.boundingBox.min.y),
-            length: Math.abs(mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z)
+            length: Math.abs(mesh.geometry.boundingBox.max.z - mesh.geometry.boundingBox.min.z),
+            fileSize: fileSize
         });
     }, onProgress);
 
