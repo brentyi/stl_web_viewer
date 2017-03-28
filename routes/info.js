@@ -4,11 +4,15 @@ const router = express.Router();
 
 /* Viewer */
 router.get('/:name', (req, res, next) => {
+
     console.log(req.params);
-    handler.getModel(parseInt(req.params.name), (data) => {
+    var name = parseInt(req.params.name);
+    handler.getModel(name, (data) => {
         var param = {
             styles: ['viewer'],
-            model_url: data.url
+            model_name: name,
+            model_url: data.url,
+            site_root: handler.site_root
         };
         res.render('info', param);
     });

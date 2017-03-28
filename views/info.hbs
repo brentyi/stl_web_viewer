@@ -9,10 +9,35 @@
 $(function() {
     STLViewer('{{model_url}}', $('#container'), false, function(data) {
         console.log(data);
+        $('#volume').text(Math.round(data.volume) / 100.0);
+        $('#width').text(Math.round(data.width) / 10.0);
+        $('#length').text(Math.round(data.length) / 10.0);
+        $('#height').text(Math.round(data.height) / 10.0);
+
+        var size = data.fileSize;
+        var units = ['B', 'K', 'M', 'G']
+        var unit_index = 0;
+        while (size >= 10 && unit_index < units.length - 1) {
+            size /= 1024.0;
+            unit_index++;
+        }
+        $('#size').text(Math.round(size * 100.0) / 100.0 + units[unit_index]);
+
+        $('#info').css('opacity', '1');
     });
 });
 </script>
 
-<div id="container" style="width: 30em; height: 30em; position: relative; border: 1px solid red;">
+<div id="container">
     <div id="percent"></div>
 </div>
+
+<section id="info">
+    <strong class="label">File size:</strong> <span id="size"></span><br />
+    <strong class="label">Volume:</strong> <span id="volume"></span>cm<sup>3</sup><br />
+    <strong class="label">Width:</strong> <span id="width"></span>cm<br />
+    <strong class="label">Length:</strong> <span id="length"></span>cm<br />
+    <strong class="label">Height:</strong> <span id="height"></span>cm<br />
+    <hr />
+    <a href="{{model_url}}">Download</a> &bull; <a href="{{site_root}}/viewer/{{model_name}}">Viewer Only</a><br />
+</section>
