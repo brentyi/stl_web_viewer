@@ -66,12 +66,17 @@ a:link, a:visited {
     opacity: 0;
     max-width: 100%;
     margin: 0 auto;
-    padding: 1.5em;
+    padding: 1em 1.5em;
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 1em;
+    left: 1em;
     z-index: 10;
     border: 1px solid #ccc;
+}
+
+.splitter {
+    color: #777;
+    padding: 0 0.5em;
 }
 
 ul, li {
