@@ -9,7 +9,7 @@
 $(function() {
     STLViewer('{{model_url}}', $('#container'), true, function(data) {
         console.log(data);
-        $('#volume').text(Math.round(data.volume) / 100.0);
+        $('#volume').text(Math.round(data.volume) / 1000.0);
         $('#width').text(Math.round(data.width) / 10.0);
         $('#length').text(Math.round(data.length) / 10.0);
         $('#height').text(Math.round(data.height) / 10.0);
