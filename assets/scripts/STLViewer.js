@@ -1,7 +1,10 @@
-function STLViewer(modelURL, $container=$('body'), showBoundingBox=false, loadedCallback) {
+function STLViewer(modelURL, $container, showBoundingBox, loadedCallback) {
     if (!Detector.webgl) Detector.addGetWebGLMessage();
-    var $container;
     var camera, controls, cameraTarget, scene, renderer, pointLight;
+
+    if($container == undefined) {
+        $container = $('body');
+    }
 
     camera = new THREE.PerspectiveCamera(40, $container.width() / $container.height(), 1, 15000);
     camera.position.set(50, 50, 50);
