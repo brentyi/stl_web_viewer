@@ -15,17 +15,17 @@ html, body {
     line-height: 2em;
 }
 
+a:link, a:visited {
+    color: #888;
+}
+
 canvas {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     opacity: 0;
     transition: opacity 0.5s;
-}
-
-a:link, a:visited {
-    color: #888;
 }
 
 .loaded canvas {
@@ -36,22 +36,18 @@ a:link, a:visited {
     width: 60em;
     max-width: 90%;
     min-height: 30em;
-    max-height: 85vh;
-    height: 50em;
+    max-height: 90%;
+    height: 60em;
     position: relative;
-    margin: 3em auto;
+    margin: 0 auto;
+    padding: 3em 0;
 }
 
-#container {
+#model_container {
     width: 100%;
     height: 100%;
     position: relative;
     margin: 0 auto;
-    transition: border 2s;
-    border: 1px solid rgba(255,255,255,0);
-}
-
-#container.loaded {
     border: 1px solid #ccc;
 }
 
@@ -62,16 +58,26 @@ a:link, a:visited {
 
 #info {
     background-color: rgba(255,255,255,0.5);
-    transition: opacity 2s;
-    opacity: 0;
-    max-width: 100%;
     margin: 0 auto;
     padding: 1em 1.5em;
     position: absolute;
-    bottom: 1em;
-    left: 1em;
+    bottom: 3em;
+    left: 0;
     z-index: 10;
     border: 1px solid #ccc;
+    transition: 0.5s all;
+}
+
+#details {
+    border-bottom: 1px solid #ccc;
+    opacity: 0;
+    height: 0;
+    transition: 1s all, 1s opacity 0.5s;
+}
+.loaded + #info #details {
+    opacity: 1;
+    height: 11em;
+    margin-bottom: 0.5em;
 }
 
 .splitter {
@@ -85,12 +91,6 @@ ul, li {
     margin: 0;
 }
 
-#links {
-    border-top: 1px solid #ccc;
-    margin-top: 0.5em;
-    padding-top: 0.5em;
-}
-
 @keyframes pulse {
     0%   {opacity: 1;}
     50%  {opacity: 0.625;}
@@ -98,6 +98,7 @@ ul, li {
 
 #percent {
     position: absolute;
+    z-index: -2;
     top: 50%;
     transform: translateY(-50%);
     font-size: 5em;
@@ -107,4 +108,21 @@ ul, li {
     animation-name: pulse;
     animation-duration: 2s;
     animation-iteration-count: infinite;
+}
+
+@media (max-width: 550px) {
+    #info {
+        right: 0;
+        left: 0;
+        bottom: 3em;
+    }
+    #info #links{
+        text-align: center;
+    }
+    #details {
+        opacity: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        transition: 1s all 0.5s, 1s opacity;
+    }
 }

@@ -7,7 +7,7 @@
 <script src="/scripts/STLViewer.js"></script>
 <script>
 $(function() {
-    STLViewer('{{model_url}}', $('#container'), true, function(data) {
+    STLViewer('{{model_url}}', $('#model_container'), true, function(data) {
         console.log(data);
         $('#volume').text(Math.round(data.volume) / 1000.0);
         $('#width').text(Math.round(data.width) / 10.0);
@@ -22,19 +22,17 @@ $(function() {
             unit_index++;
         }
         $('#size').text(Math.round(size * 100.0) / 100.0 + units[unit_index]);
-
-        $('#info').css('opacity', '1');
     });
 });
 </script>
 
 <div id="wrapper">
-    <div id="container">
+    <section id="model_container">
         <div id="percent"></div>
-    </div>
+    </section>
 
     <section id="info">
-        <ul>
+        <ul id="details">
             <li><strong class="label">Volume:</strong> <span id="volume"></span>cm<sup>3</sup></li>
             <li><strong class="label">Width:</strong> <span id="width"></span>cm</li>
             <li><strong class="label">Length:</strong> <span id="length"></span>cm</li>
