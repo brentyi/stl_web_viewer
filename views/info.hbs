@@ -7,7 +7,7 @@
 <script src="/scripts/STLViewer.js"></script>
 <script>
 $(function() {
-    STLViewer('{{model_url}}', $('#model_container'), true, function(data) {
+    THREE.STLViewer('{{model_url}}', $('#model_container'), true, function(data) {
         console.log(data);
         $('#volume').text(Math.round(data.volume) / 1000.0);
         $('#width').text(Math.round(data.width) / 10.0);

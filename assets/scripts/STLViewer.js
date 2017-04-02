@@ -1,4 +1,8 @@
-function STLViewer(modelURL, $container, showBoundingBox, loadedCallback) {
+/*
+ * Helper for viewing STLs, with some additions for returning model volume, dimensions, file size, etc
+ * brentyi@berkeley.edu
+ */
+THREE.STLViewer = function(modelURL, $container, showBoundingBox, loadedCallback) {
     if (!Detector.webgl) Detector.addGetWebGLMessage();
     var camera, controls, cameraTarget, scene, renderer, pointLight;
 
