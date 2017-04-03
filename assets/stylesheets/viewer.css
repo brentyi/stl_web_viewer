@@ -68,11 +68,18 @@ canvas {
     transition: 0.5s all;
 }
 
+#links {
+    position: relative;
+    z-index: 1;
+}
+
 #details {
     border-bottom: 1px solid #ccc;
     opacity: 0;
     height: 0;
     transition: 1s all, 1s opacity 0.5s;
+    position: relative;
+    z-index: 0;
 }
 .loaded + #info #details {
     opacity: 1;
