@@ -1,6 +1,6 @@
 <script>
 function upload(file) {
-    if (!file || file.name.split(".").pop() != "stl") {
+    if (!file || file.name.split(".").pop().toLowerCase() != "stl") {
         alert("Invalid file!");
         return;
     }
