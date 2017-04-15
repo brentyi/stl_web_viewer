@@ -1,9 +1,9 @@
-<table>
+<main id="list">
     {{#each models}}
-        <tr>
-            <td>{{original_filename}}</td>
-            <td><a href="{{info_url}}">{{formatted_name}}</a></td>
-            <td>{{views}}</td>
-        </tr>
+        <div class="row"><!--
+            --><div class="views">{{views}}</div><!--
+            --><div class="date">{{formatted_name}}</div><!--
+            --><a href="{{info_url}}"><div class="name">{{original_filename}}</a></div><!--
+        --></div>
     {{/each}}
-</table>
+</main>

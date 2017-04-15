@@ -1,12 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+body, html {
+    padding: 0;
+    margin: 0;
+}
 body {
     font-family: sans-serif;
+    line-height: 3em;
+}
+#list {
     padding: 2em;
+    width: 90%;
+    height: 99vh;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
-table {
-    margin: 0 auto;
-    border-collapse: collapse;
+.row {
+    position: relative;
+    border: 1px solid #ccc;
+    margin-bottom: -1px;
+    margin-right: -1px;
+    padding: 0 1em;
+    height: 3em;
 }
-td {
-    padding: 0.5em;
-    border : 1px solid #ccc;
+.row div {
+    padding: 0 0.5em;
+    display: inline-block;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.row .name {
+    width: 10em;
+}
+.row .date {
+    width: 12em;
+    text-align: center;
+}
+.row .views {
+    width: 3em;
+    text-align: left;
+    color: #aaa;
 }
