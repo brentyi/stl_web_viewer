@@ -56,6 +56,7 @@ module.exports.uploadModel = (request, response) => {
             url: url,
             path: request.file.path,
             views: 0,
+            original_filename: request.file.originalname,
             last_viewed: new Date()
         });
 
