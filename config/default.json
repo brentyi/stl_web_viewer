@@ -1,4 +1,5 @@
 {
   "site_root": "https://stl.brentyi.com",
+  "mongo_url": "mongodb://localhost:27017/stl_web_viewer",
   "filesize_max_mb": 5
 }

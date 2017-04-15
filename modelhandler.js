@@ -24,7 +24,7 @@ var upload = multer({
 var db;
 var db_models;
 
-var db_url = 'mongodb://localhost:27017/stl_web_viewer';
+var db_url = config.get('mongo_url');
 var MongoClient = mongodb.MongoClient;
 
 // Use connect method to connect to the Server
