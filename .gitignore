@@ -1,3 +1,4 @@
 node_modules
 *.stl
 *.log
+config/default.json
