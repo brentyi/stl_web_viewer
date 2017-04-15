@@ -44,6 +44,7 @@ module.exports.uploadModel = (request, response) => {
     upload(request, response, (err) => {
         if(err) {
             console.log('Error Occured: ', err);
+            response.status(500).json(err);
             return;
         }
 
