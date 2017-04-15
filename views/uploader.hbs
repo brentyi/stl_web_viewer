@@ -63,13 +63,8 @@ $('body').on('drop', (e) => {
         <input type="file" id="model" name="model" onchange="upload(this.files[0]);" />
         Upload STL (&lt; {{size_limit}}MB)
     </label>
+    <div id="note">or <strong>drag & drop</strong></div>
     <div id="progress">
         <span id="percent">0%</span>
-    </div>
-    <div id="response">
-        <iframe src=""></iframe>
-        <div id="markup">
-            &lt;iframe src="<a id="embed_url" target="_blank" href=""></a>" scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;
-        </div>
     </div>
 </form>

@@ -1,6 +1,9 @@
+* {
+    box-sizing: border-box;
+}
 html, body {
     font-family: Helvetica, Arial, sans-serif;
-    background-color: #eee;
+    background-color: #f0f0f0;
     padding: 0;
     margin: 0;
     width: 100%;
@@ -19,12 +22,25 @@ form {
 }
 label {
     display: inline-block;
-    border: 1px solid #777;
-    color: #555;
-    padding: 1em 2em;
+    color: #888;
+    line-height: 2em;
+    background-color: #fff;
+    padding: 1em;
+    text-align: center;
+    width: 20em;
     cursor: pointer;
 }
 .upload_started label {
+    display: none;
+}
+#note {
+    padding: 1em 0.3em;
+    color: #aaa;
+    font-style: italic;
+    text-align: center;
+    margin: 0 auto;
+}
+.upload_started #note {
     display: none;
 }
 input[type="file"] {
