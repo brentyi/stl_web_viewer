@@ -4,7 +4,6 @@ const router = express.Router();
 
 /* Viewer */
 router.get('/:name', (req, res, next) => {
-    console.log(req.params);
     var name = parseInt(req.params.name);
     handler.getModel(name, (data) => {
         console.log('------------');

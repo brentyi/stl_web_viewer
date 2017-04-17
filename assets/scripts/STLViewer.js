@@ -29,7 +29,6 @@ THREE.STLViewer = function(modelURL, $container, showBoundingBox, loadedCallback
     var loader = new THREE.STLLoader();
 
     pointLight = new THREE.PointLight( 0xdddddd, 0.75, 0);
-    pointLight.position.set(0, 20, 0);
 
     fileSize = 0;
 
@@ -41,7 +40,7 @@ THREE.STLViewer = function(modelURL, $container, showBoundingBox, loadedCallback
 
     loader.load(modelURL, function(geometry) {
         var material = new THREE.MeshPhongMaterial({
-            color: 0xffffff,
+            color: 0xf7f8ff,
             specular: 0x111111,
             shininess: 0,
             wireframe: false,
@@ -61,7 +60,7 @@ THREE.STLViewer = function(modelURL, $container, showBoundingBox, loadedCallback
 
         var edges = new THREE.EdgesGeometry(geometry, 29);
         var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
-            color: 0x888888
+            color: 0x777777
         }));
         scene.add(line);
 
@@ -72,6 +71,7 @@ THREE.STLViewer = function(modelURL, $container, showBoundingBox, loadedCallback
         var r = geometry.boundingSphere.radius;
         controls.maxDistance = r * 10;
 
+        pointLight.position.set(0, r, 0);
         camera.position.set(
             r * 1.5 + cameraTarget.x,
             r * 1.5 + cameraTarget.y,
