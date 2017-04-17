@@ -50,11 +50,8 @@ module.exports.uploadModel = (request, response) => {
 
         console.log('Uploaded model to ' + request.file.path);
 
-        var url = site_root + '/uploads/' + request.file.filename;
-
         db_models.insert({
             name: model_name,
-            url: url,
             path: request.file.path,
             views: 0,
             original_filename: request.file.originalname,
@@ -79,9 +76,6 @@ module.exports.getModel = (name, cb) => {
         }
 
         db_models.update({_id: item._id}, {$set: {last_viewed: new Date(), views: ++item.views}});
-
-        console.log(item);
-
         cb(item);
     });
 }

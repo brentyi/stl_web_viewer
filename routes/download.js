@@ -1,25 +1,20 @@
 const express = require('express');
 const handler = require('../modelhandler');
 const router = express.Router();
+const path = require('path');
 
-/* Model info page */
+/* Model download route */
 router.get('/:name', (req, res, next) => {
 
     console.log(req.params);
     var name = parseInt(req.params.name);
     handler.getModel(name, (data) => {
         console.log('------------');
-        console.log('Pulling info page for model');
+        console.log('Downloading model');
         console.log(data);
         console.log('------------');
-        var param = {
-            styles: ['viewer'],
-            model_name: name,
-            filename: data.original_filename || 'model.stl',
-            model_url: handler.site_root + '/download/' + name,
-            site_root: handler.site_root
-        };
-        res.render('info', param);
+        res.attachment(data.original_filename || 'model.stl');
+        res.sendFile('model-' + data.name + '.stl',  { root : path.join(__dirname, '../assets/uploads')});
     });
 });
 

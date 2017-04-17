@@ -66,11 +66,19 @@ canvas {
     z-index: 10;
     border: 1px solid #ccc;
     transition: 0.5s all;
+    color: #777;
+}
+
+#filename {
+    font-weight: 800;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5em;
 }
 
 #links {
     position: relative;
     z-index: 1;
+    padding-top: 0.5em;
 }
 
 #details {
@@ -82,9 +90,10 @@ canvas {
     z-index: 0;
 }
 .loaded + #info #details {
+    padding: 0.5em 0;
     opacity: 1;
-    height: 11em;
-    margin-bottom: 0.5em;
+    height: auto;
+    height: 11.5em;
 }
 
 .splitter {
@@ -123,13 +132,14 @@ ul, li {
         left: 0;
         bottom: 3em;
     }
-    #info #links{
+    #info #links, #info #filename{
         text-align: center;
     }
     #details {
+        padding: 0 !important;
         opacity: 0 !important;
         height: 0 !important;
         margin: 0 !important;
-        transition: 1s all 0.5s, 1s opacity;
+        transition: 1s all 0.625s, 1s opacity;
     }
 }
